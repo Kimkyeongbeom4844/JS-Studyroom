@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>DOM - Create & Add Node</title>
+	<link rel="stylesheet" href="css/nameList.css">
+</head>
+<body>
+	<div id="container">
+		<h1>참가 신청</h1>
+		<form action="">
+			<input type="text" id="userName" placeholder="이름" required>
+			<button onclick="newRegister();">신청</button>
+		</form>
+		<hr>
+		<div id="nameList"></div>
+	</div>
+	<script>
+			// //.appenChild()는 새로 들어온 노드를 맨끝에 추가
+			// function newRegister() {
+			// 	var newNode = document.createElement("p");
+			// 	var username = document.getElementById("userName");
+			// 	var newText = document.createTextNode(username.value);
+			// 	newNode.appendChild(newText);
+			// 	var namelist = document.getElementById("nameList");
+			// 	namelist.appendChild(newNode);
+			// 	username.value = "";  //이 부분이 제일 이해안간다. 이거 없으면 잠깐 결과보엿다가 사라진다 왜일까?
+			// }
+				//.insertBefore()를 사용하면 원하는 부분에 새로운 노드를 추가
+			function newRegister() {
+				if (document.getElementById("userName").value == "") {
+					alert("값을 입력하시오")
+				}
+				else {
+					var newNode = document.createElement("p");
+					var username = document.getElementById("userName");
+					var newText = document.createTextNode(username.value);
+					newNode.appendChild(newText);
+					var delBtn = document.createElement("span");
+					var delText = document.createTextNode("X");
+					delBtn.appendChild(delText);
+					delBtn.setAttribute("class","del");
+					newNode.appendChild(delBtn);
+					
+					var namelist = document.getElementById("nameList");
+					namelist.insertBefore(newNode,namelist.childNodes[0]); //namelist안에 있는 0번째 자식의 자리에 newNode를 삽입
+					username.value = "";
+					
+					var removeBtn = document.querySelectorAll(".del"); //newRegister()함수가 실행할때마다 class="del"이 추가되서 여기 있는것
+					for (var i=0; i<removeBtn.length; i++) {
+						removeBtn[i].addEventListener("click",function(){
+							this.parentNode.parentNode.removeChild(this.parentNode); //<div id="nameList"><p>입력한 글<span class="del">X</span></p></div>
+						})
+					}
+				}
+			}	
+	</script>
+	<!-- <script src="js/register-create.js"></script> -->
+</body>
+</html>
