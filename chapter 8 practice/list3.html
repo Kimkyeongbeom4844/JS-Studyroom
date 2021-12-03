@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>DOM - Create & Add Node</title>
+	<link rel="stylesheet" href="css/nameList.css">
+</head>
+<body>
+	<div id="container">
+		<h1>참가 신청</h1>
+		<form action="">
+			<input type="text" id="userName" placeholder="이름" required>
+			<button onclick="doit();">신청</button>
+		</form>
+		<hr>
+		<div id="nameList"></div>
+	</div>
+<script>
+	function doit() {
+		var newNode = document.createElement("p");
+		var getText = document.getElementById("userName");
+		var newText = document.createTextNode(getText.value);
+		newNode.appendChild(newText);
+		var delNode = document.createElement("span");
+		var delBtn = document.createTextNode("X");
+		delNode.appendChild(delBtn);
+		delNode.setAttribute("class","del");
+		newNode.appendChild(delNode);
+		var List = document.getElementById("nameList");
+		List.insertBefore(newNode,List.childNodes[0]);
+		//List.appendChild(newNode); -> 노드 맨뒤에 추가하고 싶을때
+		getText.value = ""; //얘가 없으면 작동이 안됨, 왜안되는지는 잘 모르겟는데 추측컨데 getText의 값을 정해주지않으면 바로 사라져서 그런듯?
+		
+		var delText = document.getElementsByClassName("del");
+		for (var i=0; i<delText.length; i++) {
+			delText[i].addEventListener("click",function(){
+				this.parentNode.parentNode.removeChild(this.parentNode);
+			})
+		}
+	}
+</script>
+	<!-- <script src="js/register-create.js"></script> -->
+</body>
+</html>
